@@ -13,7 +13,7 @@ nAgent = 50
 kplus = 0.1
 kmoins = 0.3
 t = 100
-taux_erreur = 0
+taux_erreur = 0.1
 nbTour = 5000
 
 #Choix des paramètres d'animation
