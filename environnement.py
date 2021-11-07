@@ -72,5 +72,5 @@ class Environnement:
             str += ligne +"\n"
         return str
 
-jeu = Environnement(5,5,10,15,21,1,1,1,1)
+jeu = Environnement(5,5,8,8,15,1,1,1,1)
 print(jeu)
