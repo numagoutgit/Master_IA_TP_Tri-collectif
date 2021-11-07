@@ -45,7 +45,8 @@ class Agent:
 
     def proba_depot(self, type):
       """Probabilite de deposer l'objet de type"""
-      return (self.kmoins/(self.kmoins + self.f(type)))**2
+      f = self.f(type)
+      return (f/(self.kmoins + f))**2
 
     def perception(self):
       """Renvoie les cellules voisines de l'agent disponible"""

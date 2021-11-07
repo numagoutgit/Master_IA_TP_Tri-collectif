@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 from cell import *
 from objet import *
@@ -18,7 +19,7 @@ class Environnement:
          - t : Mémoire des agents
          - taux_erreur : Pourcentage d'erreur dans la reconnaissance d'objet"""
 
-    def __init__(self, M, N, nA, nB, nAgent, kplus, kmoins, t, taux_erreur):
+    def __init__(self, M, N, nA, nB, nAgent, kplus, kmoins, t, taux_erreur=0):
         self.M = M
         self.N = N
         self.kplus = kplus
@@ -72,12 +73,47 @@ class Environnement:
             str += ligne +"\n"
         return str
 
-    def run(self, n):
+    def coord_agents(self):
+        """Renvoie les coordonnées de tous les agents sur le terrain, cette fonction sert pour la représentation graphique"""
+        X = []
+        Y = []
+        for i in range(self.M):
+            for j in range(self.N):
+                if self.tableau[i,j].agent != None:
+                    X.append(i)
+                    Y.append(j)
+        return (X,Y)
+
+    def coord_objet(self, type):
+        """Renvoie les coordonnées de tous les objets de type, fonction à but graphique"""
+        X = []
+        Y = []
+        for i in range(self.M):
+            for j in range(self.N):
+                if self.tableau[i,j].objet != None:
+                    if self.tableau[i,j].objet.type == type:
+                        X.append(i)
+                        Y.append(j)
+        return (X,Y)
+
+    def run(self, n, plots, fig, animation_speed, animation_freq):
+        """Fonction qui lance la simulation et actualise le graphique"""
         for k in range(n):
             for i in range(self.M):
                 for j in range(self.N):
                     if self.tableau[i,j].agent != None:
                         self.tableau[i,j].agent.action()
 
-jeu = Environnement(5,5,8,8,15,1,1,1,1)
-print(jeu)
+            #Actualise le graphique a une fréquence donnée et un vitesse donnée
+            if k%animation_freq == 0:
+                (X,Y) = self.coord_objet('A')
+                plots[0].set_data(X,Y)
+
+                (X,Y) = self.coord_objet('B')
+                plots[1].set_data(X,Y)
+
+                (X,Y) = self.coord_agents()
+                plots[2].set_data(X,Y)
+
+                #Permet d'actualiser le graphique
+                plt.pause(animation_speed)
