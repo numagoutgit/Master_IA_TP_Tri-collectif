@@ -19,3 +19,26 @@ J'ai implémenté deux fonctions `run` pour prévoir deux manières de générer
 **Executer :**
 
 Télécharger le dossier, changer les paramètres du jeu et de l'animation dans `main.py`. Puis executer `python3 main.py` et suivre les instructions.
+
+## Rapport
+
+**Analyse de l'algorithme :**
+
+Pourquoi avec ses comportements très simple les agents sont-ils capables d'ordonner le tableau ?
+Comme vu dans le sujet, chaque agent à une probabilité P_prise = (k_plus/(k_plus + f_x))² et P_depot = (f_x/(k_moins+f_x))² de prendre/déposer un objet de type x, avec f_x la proportion d'objet de type x dans la mémoire de l'agent (ie si la mémoire est "AOOBBAOOB" f_a = 2/9) et k_moins, k_plus sont des constantes.
+
+On remarque alors 2 choses :
+- Plus f_x augmente, plus P_prise diminue et P_depot augmente
+- Plus f_x diminue, plus P_prise augmente et P_depot diminue
+
+Donc plus la proportion d'objet de type X dans la mémoire de l'agent augmente plus il est susceptible de déposer un objet du même type et de ramasser un objet du type opposé. De plus les agents bougent de manière aléatoire, il y a donc beaucoup de chance qu'ils tournent en rond (car la probabilité d'aller d'un coté est la même que d'aller du coté opposé), donc leur mémoire correspond à une zone uniforme autour de l'agent. La mémoire de l'agent est en fait une densité à un endroit donné.
+
+Avec cette analyse, il est donc logique que les agents regroupent les objets du même type entre-eux.
+
+**Prise en compte de l'erreur**
+
+Lorsque l'on prend en compte l'erreur, on remarque que plus l'erreur est grande, plus les agents regroupent les objets entre-eux mais pas forcément du même type. En effet, lorsque l'erreur est élevée, l'agent n'arrive plus à distinguer le type de l'objet, en revanche il arrive quand même à distinguer s'il y a ou non un objet.
+
+**Prise en compte de la taille de la mémoire**
+
+Plus la taille de la mémoire est grande, moins les clusters d'objets sont nombreux et plus ils sont étendus (moins denses). C'est l'inverse lorsque la taille de la mémoire est faible. En effet, plus la mémoire est grande, plus les agents ont une vision étendue. Ce qui signifie qu'ils essaient d'homogénéiser de plus grandes zones.
