@@ -96,7 +96,7 @@ class Environnement:
                         Y.append(j)
         return (X,Y)
 
-    def run(self, n, plots, fig, animation_speed, animation_freq):
+    def run_without_saving(self, n, plots, fig, animation_speed, animation_freq):
         """Fonction qui lance la simulation et actualise le graphique"""
         for k in range(n):
             for i in range(self.M):
@@ -117,3 +117,28 @@ class Environnement:
 
                 #Permet d'actualiser le graphique
                 plt.pause(animation_speed)
+
+    def run_with_saving(self, n):
+        """Fonction qui lance la simulation et renvoie toutes les données à animer"""
+        XA = []
+        YA = []
+        XB = []
+        YB = []
+        Xagent = []
+        Yagent = []
+        for k in range(n):
+            for i in range(self.M):
+                for j in range(self.N):
+                    if self.tableau[i,j].agent != None:
+                        self.tableau[i,j].agent.action()
+
+            (X,Y) = self.coord_agents()
+            Xagent.append(X)
+            Yagent.append(Y)
+            (X,Y) = self.coord_objet('A')
+            XA.append(X)
+            YA.append(Y)
+            (X,Y) = self.coord_objet('B')
+            XB.append(X)
+            YB.append(Y)
+        return(XA, YA, XB, YB, Xagent, Yagent)
