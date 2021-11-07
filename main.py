@@ -12,13 +12,13 @@ nB = 100
 nAgent = 50
 kplus = 0.1
 kmoins = 0.3
-t = 50
+t = 100
 taux_erreur = 0
-nbTour = 500
+nbTour = 5000
 
 #Choix des paramètres d'animation
-animation_speed = 0.1 #temps en seconde entre 2 images
-animation_freq = 10 #Nombre de tour entre 2 images
+animation_speed = 0.01 #temps en seconde entre 2 images
+animation_freq = 50 #Nombre de tour entre 2 images
 
 jeu = Environnement(M,N,nA,nB,nAgent,kplus,kmoins,t,taux_erreur)
 
@@ -33,6 +33,7 @@ savefile = reponse_user == 'y'
 (XB, YB) = jeu.coord_objet('B')
 (Xagent, Yagent) = jeu.coord_agents()
 plot = ax.plot(XA, YA, 'bo', XB, YB, 'ro', Xagent, Yagent, 'k1')
+fig.suptitle('Taille mémoire = '+str(t)+"; Taux d'erreur = "+str(taux_erreur))
 
 
 if not savefile:
