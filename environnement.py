@@ -60,16 +60,6 @@ class Environnement:
                 y = np.random.randint(N)
             self.tableau[x,y].set_agent(Agent(self, self.tableau[x, y], kplus, kmoins, t, taux_erreur))
 
-    def __str__(self):
-        str = ""
-        for i in range(self.M):
-            ligne = "["
-            for j in range(self.N):
-                ligne+=self.tableau[i,j].toString()+"; "
-            ligne = ligne[:-2] + "]"
-            str += ligne +"\n"
-        return str
-
     def coord_agents(self):
         """Renvoie les coordonnées de tous les agents sur le terrain, cette fonction sert pour la représentation graphique"""
         X = []

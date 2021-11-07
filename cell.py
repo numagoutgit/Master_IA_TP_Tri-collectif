@@ -21,14 +21,3 @@ class Cell:
 
     def set_objet(self, objet):
         self.objet = objet
-
-    def toString(self):
-        if self.objet == None:
-            obj = 'O'
-        else:
-            obj = self.objet.type
-        if self.agent == None:
-            ag = ' '
-        else:
-            ag = 'X'
-        return ("("+obj+","+ag+")")
