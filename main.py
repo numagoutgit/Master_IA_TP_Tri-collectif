@@ -12,13 +12,13 @@ nB = 100
 nAgent = 50
 kplus = 0.1
 kmoins = 0.3
-t = 100
-taux_erreur = 0.1
+t = 10
+taux_erreur = 0
 nbTour = 5000
 
 #Choix des paramètres d'animation
-animation_speed = 0.01 #temps en seconde entre 2 images
-animation_freq = 50 #Nombre de tour entre 2 images
+animation_speed = 0.001 #temps en seconde entre 2 images
+animation_freq = 5 #Nombre de tour entre 2 images
 
 jeu = Environnement(M,N,nA,nB,nAgent,kplus,kmoins,t,taux_erreur)
 
