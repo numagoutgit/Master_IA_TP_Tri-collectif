@@ -39,10 +39,10 @@ Avec cette analyse, il est donc logique que les agents regroupent les objets du 
 
 Lorsque l'on prend en compte l'erreur, on remarque que plus l'erreur est grande, plus les agents regroupent les objets entre-eux mais pas forcément du même type. En effet, lorsque l'erreur est élevée, l'agent n'arrive plus à distinguer le type de l'objet, en revanche il arrive quand même à distinguer s'il y a ou non un objet.
 
-![](image_rapport/erreur_faible.png?raw=true) ![](image_rapport/erreur_elevee.png?raw=true)
+![](image_rapport/reference.png?raw=true) ![](image_rapport/erreur_elevee.png?raw=true)
 
 **Prise en compte de la taille de la mémoire**
 
 Plus la taille de la mémoire est grande, moins les clusters d'objets sont nombreux et plus ils sont étendus (moins denses). C'est l'inverse lorsque la taille de la mémoire est faible. En effet, plus la mémoire est grande, plus les agents ont une vision étendue. Ce qui signifie qu'ils essaient d'homogénéiser de plus grandes zones.
 
-![](image_rapport/erreur_faible.png?raw=true) ![](image_rapport/memoire_elevee.png?raw=true)
+![](image_rapport/memoire_elevee.png?raw=true)
