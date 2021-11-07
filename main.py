@@ -17,8 +17,8 @@ taux_erreur = 0
 nbTour = 500
 
 #Choix des paramètres d'animation
-animation_speed = 0.1
-animation_freq = 10
+animation_speed = 0.1 #temps en seconde entre 2 images
+animation_freq = 10 #Nombre de tour entre 2 images
 
 jeu = Environnement(M,N,nA,nB,nAgent,kplus,kmoins,t,taux_erreur)
 
@@ -66,7 +66,7 @@ else:
 
     #Saving animation
     f = r"animation.gif"
-    writergif = anim.PillowWriter(fps=60)
+    writergif = anim.PillowWriter(fps=int(1/animation_speed))
     animation.save(f, writer=writergif)
 
 plt.show()
