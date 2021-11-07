@@ -89,19 +89,22 @@ class Agent:
     def choix_deplacement(self):
       """Choisi son déplacement de manière aléatoire"""
       voisin = self.perception()
+      if len(voisin) == 0:
+        return None
       return voisin[np.random.randint(len(voisin))]
 
     def action(self):
       """Enclenche l'action de l'agent"""
       new_cellule = self.choix_deplacement()
-      self.move(new_cellule)
-      if self.objet == None:
-        if self.cellule.objet != None:
-          proba = self.proba_prise(self.cellule.objet.type)
-          if np.random.rand() < proba:
-            self.prendre_objet()
-      else:
-        if self.cellule.objet == None:
-          proba = self.proba_depot(self.cellule.objet.type)
-          if np.random.rand() < proba:
-            self.depot_objet(self.objet)
+      if new_cellule != None:
+        self.move(new_cellule)
+        if self.objet == None:
+          if self.cellule.objet != None:
+            proba = self.proba_prise(self.cellule.objet.type)
+            if np.random.rand() < proba:
+              self.prendre_objet()
+        else:
+          if self.cellule.objet == None:
+            proba = self.proba_depot(self.objet.type)
+            if np.random.rand() < proba:
+              self.depot_objet()

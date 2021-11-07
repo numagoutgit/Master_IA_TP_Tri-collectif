@@ -72,5 +72,12 @@ class Environnement:
             str += ligne +"\n"
         return str
 
+    def run(self, n):
+        for k in range(n):
+            for i in range(self.M):
+                for j in range(self.N):
+                    if self.tableau[i,j].agent != None:
+                        self.tableau[i,j].agent.action()
+
 jeu = Environnement(5,5,8,8,15,1,1,1,1)
 print(jeu)
