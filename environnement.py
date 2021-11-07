@@ -33,7 +33,7 @@ class Environnement:
         #Création des cellules vides
         for i in range(M):
             for j in range(N):
-                self.tableau[i,j] = Cell(None, None)
+                self.tableau[i,j] = Cell(i, j, None, None)
 
         #Placement aléatoire des objets A
         for k in range(nA):
@@ -60,7 +60,7 @@ class Environnement:
             while self.tableau[x,y].agent != None:
                 x = np.random.randint(M)
                 y = np.random.randint(N)
-            self.tableau[x,y].set_agent(Agent(self.kplus, self.kmoins, self.t, self.taux_erreur))
+            self.tableau[x,y].set_agent(Agent(self, self.tableau[x, y], self.kplus, self.kmoins, self.t, self.taux_erreur))
 
     def __str__(self):
         str = ""

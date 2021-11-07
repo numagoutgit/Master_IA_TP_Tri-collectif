@@ -6,10 +6,13 @@ from objet import *
 class Cell:
     """Case du tableau; elle peut contenir un objet (A ou B), un agent ou les deux.
        Attribute :
+         - x,y : Coordonnée du la cellule sur le plateau
          - agent : l'agent sur la cell ou None si aucun
          - objet : A, B ou None si aucun"""
 
-    def __init__(self, agent, objet):
+    def __init__(self, x, y, agent, objet):
+        self.x = x
+        self.y = y
         self.agent = agent
         self.objet = objet
 

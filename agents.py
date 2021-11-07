@@ -3,12 +3,18 @@ import numpy as np
 class Agent:
     """Agent dans le tableau. Peut se déplacer dans le tableau, ramasser/déposer un objet avec une probabilité. Possède une mémoire d'un nombre des cells visitées précédemment.
        Attribut :
+         - env : Environnement où prend place l'agent
+         - cellule : Cellule où se situe l'agent
          - kplus : Constante de probabilite de prise
          - kmoins : Constante de probabilite de dépot
          - memoire : Liste de taille t représentant la mémoire de l'agent
          - taux_erreur : Taux d'erreur de discernement des objets (valeur par defaut = 0)"""
 
-    def __init__(self, kplus, kmoins, t, taux_erreur=0):
+    directions = [[1,0], [-1,0], [0,1], [0,-1], [1,1], [1,-1], [-1,1], [-1,-1]]
+
+    def __init__(self, env, cellule, kplus, kmoins, t, taux_erreur=0):
+        self.env = env
+        self.cellule = cellule
         self.kplus = kplus
         self.kmoins = kmoins
         self.memoire = ['O' for i in range(t)]
@@ -35,3 +41,14 @@ class Agent:
     def proba_depot(self, type):
       """Probabilite de deposer l'objet de type"""
       return (self.kmoins/(self.kmoins + self.f(type)))**2
+
+    def perception(self):
+      """Renvoie les cellules voisines de l'agent disponible"""
+      x = self.cellule.x
+      y = self.cellule.y
+      voisin_disponible = []
+      for dir in Agent.directions:
+        cellule = self.env.tableau[x+dir[0], y+dir[1]]
+        if cellule.agent == None:
+          voisin_disponible.append(cellule)
+      return voisin_disponible
