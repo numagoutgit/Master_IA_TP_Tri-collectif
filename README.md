@@ -46,3 +46,8 @@ Lorsque l'on prend en compte l'erreur, on remarque que plus l'erreur est grande,
 Plus la taille de la mémoire est grande, moins les clusters d'objets sont nombreux et plus ils sont étendus (moins denses). C'est l'inverse lorsque la taille de la mémoire est faible. En effet, plus la mémoire est grande, plus les agents ont une vision étendue. Ce qui signifie qu'ils essaient d'homogénéiser de plus grandes zones.
 
 ![](image_rapport/memoire_elevee.png?raw=true)
+
+**Gif animation**
+
+![](image_rapport/animation.gif?raw=true)
+
