@@ -16,7 +16,7 @@ class Agent:
 
     directions = [[1,0], [-1,0], [0,1], [0,-1], [1,1], [1,-1], [-1,1], [-1,-1]]
 
-    def __init__(self, env, cellule, kplus, kmoins, t, taux_erreur=0):
+    def __init__(self, env, cellule, kplus, kmoins, t, taux_erreur):
         self.env = env
         self.cellule = cellule
         self.objet = None

@@ -10,26 +10,23 @@ class Environnement:
        Attributes :
          - M : Nombre de ligne du tableau
          - N : Nombre de colonne du tableau
-         - tableau : Matrice de MxN cell
-         - nA : Nombre d'objet de type A
-         - nB : Nombre d'objet de type B
-         - nAgent : Nombre d'agent
-         - kplus : Constante de probabilite de prise
-         - kmoins : Constante de probabilite de dépot
-         - t : Mémoire des agents
-         - taux_erreur : Pourcentage d'erreur dans la reconnaissance d'objet"""
+         - tableau : Matrice de MxN cell"""
 
     def __init__(self, M, N, nA, nB, nAgent, kplus, kmoins, t, taux_erreur=0):
+        """Initialise l'environnement
+           - nA : Nombre d'objet de type A
+           - nB : Nombre d'objet de type B
+           - nAgent : Nombre d'agent
+           - kplus : Constante de probabilite de prise
+           - kmoins : Constante de probabilite de dépot
+           - t : Mémoire des agents
+           - taux_erreur : Pourcentage d'erreur dans la reconnaissance d'objet"""
         self.M = M
         self.N = N
-        self.kplus = kplus
-        self.kmoins = kmoins
-        self.t = t
-        self.taux_erreur = taux_erreur
 
-        self.init_tableau(M, N, nA, nB, nAgent)
+        self.init_tableau(M, N, nA, nB, nAgent, kplus, kmoins, t, taux_erreur)
 
-    def init_tableau(self, M, N, nA, nB, nAgent):
+    def init_tableau(self, M, N, nA, nB, nAgent, kplus, kmoins, t, taux_erreur):
         self.tableau = np.zeros((M,N),dtype=Cell)
         #Création des cellules vides
         for i in range(M):
@@ -61,7 +58,7 @@ class Environnement:
             while self.tableau[x,y].agent != None:
                 x = np.random.randint(M)
                 y = np.random.randint(N)
-            self.tableau[x,y].set_agent(Agent(self, self.tableau[x, y], self.kplus, self.kmoins, self.t, self.taux_erreur))
+            self.tableau[x,y].set_agent(Agent(self, self.tableau[x, y], kplus, kmoins, t, taux_erreur))
 
     def __str__(self):
         str = ""
