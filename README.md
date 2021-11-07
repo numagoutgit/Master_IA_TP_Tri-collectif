@@ -14,7 +14,7 @@ Pour implémenter ce problème j'ai crée plusieurs classes.
 
 J'ai implémenté deux fonctions `run` pour prévoir deux manières de générer l'animation. 
 - `run_without_saving` : qui après chaque tour des agents actualise le graphe, moins gourmant en mémoire et permet l'affichage du graphique avant la fin d'execution de tous les tous. Il ne permet cependant pas de sauvegarder la figure et les images par seconde sont limitées.
-- `run_with_saving` : qui garde en mémoire toutes les positions de tous les agents et tous les objets à chaque tour, puis génère une animation avec. Gourmant en mémoire et prend du temps à ce lancer car il faut tout calculer avant de pouvoir afficher. La video est cependant sauvegardable et les images par secondes sont très bien.
+- `run_with_saving` : qui garde en mémoire toutes les positions de tous les agents et tous les objets à chaque tour, puis génère une animation avec. Gourmant en mémoire et prend du temps à ce lancer car il faut tout calculer avant de pouvoir afficher. La video est cependant sauvegardable et les images par secondes sont très bien. Pensez à supprimer/renommer l'ancienne animation si vous souhaitez en sauvegarder une autre
 
 **Executer :**
 
