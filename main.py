@@ -25,7 +25,7 @@ jeu = Environnement(M,N,nA,nB,nAgent,kplus,kmoins,t,taux_erreur)
 fig, ax = plt.subplots()
 
 #On demande à l'utilisateur s'il veut sauvegarder l'animation
-reponse_user = input("Voulez-vous sauvegarder l'animation (y/n, defaut n)? (Si y, le programme prendra plus de temps à démarrer) ")
+reponse_user = input("Voulez-vous sauvegarder l'animation (y/n, defaut n)? (Si y, le programme prendra plus de temps à démarrer, et pour un nbTour trop élevé avec un animation_freq trop faible, le programme risque de ne pas fini) ")
 savefile = reponse_user == 'y'
 
 #Plot du début

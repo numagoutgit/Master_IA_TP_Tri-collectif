@@ -18,7 +18,7 @@ J'ai implémenté deux fonctions `run` pour prévoir deux manières de générer
 
 **Executer :**
 
-Télécharger le dossier, changer les paramètres du jeu et de l'animation dans `main.py`. Puis executer `python3 main.py` et suivre les instructions. Il faut avoir `matplotlib.pyplot` ainsi que `matplotlib.animation` et `numpy`
+Télécharger le dossier, changer les paramètres du jeu et de l'animation dans `main.py`. Puis executer `python3 main.py` et suivre les instructions. Il faut avoir `matplotlib.pyplot` ainsi que `matplotlib.animation` et `numpy`. Attention si vous répondez y à la question avec un nbTour trop élevé et un animation_freq trop faible cela risque de ne pas ce terminer.
 
 ## Rapport
 
