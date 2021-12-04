@@ -124,12 +124,13 @@ class Agent:
 
     def choix_deplacement(self):
       """Choisi son déplacement de manière aléatoire"""
-      if self.etat == "free" or self.etat == "leader":
+      if self.etat == "free" or self.etat == "leader": #il choisi son deplacement aleatoirement
         mouvement_disponible = self.mouvement_disponible()
         if len(mouvement_disponible) == 0:
           return None
         return mouvement_disponible[np.random.randint(len(mouvement_disponible))]
-      elif self.etat == "Looking for":
+
+      elif self.etat == "Looking for": #il recherche le max de phéromone, s'il se situe deja dessus il redevient free
         voisin = self.perception()
         for cell in voisin:
           if cell.agent != None:
@@ -154,13 +155,14 @@ class Agent:
           return mouvement_disponible[np.random.randint(len(mouvement_disponible))]
         else:
           return new_cell
+
       else:
         return None
 
     def action(self):
       """Enclenche l'action de l'agent"""
       new_cellule = self.choix_deplacement()
-      if self.etat == "free":
+      if self.etat == "free": #Si l'agent est free, il agit comme avant sauf s'il tombe sur un objet C et qu'il veut le ramasser
         if new_cellule != None:
           self.move(new_cellule)
           if self.objet != None:
@@ -177,9 +179,11 @@ class Agent:
                 else:
                   self.etat = "help"
                   self.emission_pheromone()
-      elif self.etat == "follow":
+
+      elif self.etat == "follow": #Si il est follow, new_cellule == None sauf au tout début où new_cellule est la position du leader
         self.move(new_cellule)
-      elif self.etat == "leader":
+
+      elif self.etat == "leader": #Si il est leader alors il se comporte comme un free (mais seulement avec les objets C)
         if self.objet == None:
           self.prendre_objet()
         else:
@@ -194,9 +198,11 @@ class Agent:
                 self.follower.etat = "free"
                 self.follower.leader = None
                 self.follower = None
-      elif self.etat == "Looking for":
+
+      elif self.etat == "Looking for": #Si il est en looking for, new_cellule est le max de phéromone des voisins
         self.move(new_cellule)
-      else:
+
+      else: #Si il est en help, il continue de demander de l'aide jusqu'à un changement
         self.time_waiting += 1
         if self.time_waiting > self.temps_attente:
           self.etat = "free"
