@@ -7,20 +7,23 @@ from environnement import *
 #Choix des paramètres du tri
 M = 50
 N = 50
-nA = 100
-nB = 100
-nC = 100
-nAgent = 50
+nA = 50
+nB = 50
+nC = 50
+nAgent = 100
 kplus = 0.1
 kmoins = 0.3
 t = 10
+S = 10
+att_pheromone = 0.2
+temps_attente = 10
 nbTour = 5000
 
 #Choix des paramètres d'animation
 animation_speed = 0.001 #temps en seconde entre 2 images
 animation_freq = 1 #Nombre de tour entre 2 images
 
-jeu = Environnement(M,N,nA,nB,nC,nAgent,kplus,kmoins,t)
+jeu = Environnement(M,N,nA,nB,nC,nAgent,kplus,kmoins,t, S, att_pheromone, temps_attente)
 
 fig, ax = plt.subplots()
 

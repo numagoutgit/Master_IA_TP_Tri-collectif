@@ -15,21 +15,25 @@ class Agent:
          - etat : Etat de l'agent (Free, Help, Follow, Looking for, Leader)
          - quantite : quantite de pheromone envoyee
          - leader : Agent leader si il est en follow
-         - follower : Agent suiveur si il est leader"""
+         - follower : Agent suiveur si il est leader
+         - time_waiting : Depuis combien de temps l'agent attend de l'aide
+         - temps_attente : temps d'attente avant d'abandonner la recherche d'aide"""
 
     directions = [[1,0], [-1,0], [0,1], [0,-1], [1,1], [1,-1], [-1,1], [-1,-1]]
 
-    def __init__(self, env, cellule, kplus, kmoins, t, S):
+    def __init__(self, env, cellule, kplus, kmoins, t, S, temps_attente):
         self.env = env
-        self.cellule = cellule
+        self.cellule : Cell = cellule
         self.objet = None
         self.kplus = kplus
         self.kmoins = kmoins
         self.memoire = ['O' for i in range(t)]
         self.etat = "Free"
         self.quantite = S
-        self.leader = None
-        self.follower = None
+        self.leader : Agent = None
+        self.follower : Agent = None
+        self.time_waiting = 0
+        self.temps_attente = temps_attente
 
     def f(self, type):
       """Calcule la proportion d'objet dans la memoire"""
@@ -91,10 +95,15 @@ class Agent:
 
     def move(self,cellule_suivante):
       """Deplacement de l'agent vers la cellule"""
-      self.cellule.set_agent(None)
-      cellule_suivante.set_agent(self)
-      self.cellule = cellule_suivante
-      self.actualiser_memoire(cellule_suivante)
+      if cellule_suivante != None:
+        if self.etat == "follow":
+          self.cellule.set_agent_following(None)
+        elif self.etat == "free":
+          self.cellule.set_agent_following(None)
+        self.cellule.set_agent(None)
+        cellule_suivante.set_agent(self)
+        self.cellule = cellule_suivante
+        self.actualiser_memoire(cellule_suivante)
 
     def prendre_objet(self):
       """Prend l'objet situé sur sa cellule"""
@@ -121,6 +130,16 @@ class Agent:
           return None
         return mouvement_disponible[np.random.randint(len(mouvement_disponible))]
       elif self.etat == "Looking for":
+        voisin = self.perception()
+        for cell in voisin:
+          if cell.agent != None:
+            if cell.agent.etat == "help":
+              self.etat = "follow"
+              self.leader = cell.agent
+              cell.agent.etat = "leader"
+              cell.agent.follower = self
+              cell.agent.time_waiting = 0
+              return cell
         mouvement_disponible = self.mouvement_disponible()
         if len(mouvement_disponible) == 0:
           return None
@@ -141,15 +160,46 @@ class Agent:
     def action(self):
       """Enclenche l'action de l'agent"""
       new_cellule = self.choix_deplacement()
-      if new_cellule != None:
+      if self.etat == "free":
+        if new_cellule != None:
+          self.move(new_cellule)
+          if self.objet != None:
+            if self.cellule.objet == None:
+              proba = self.proba_depot(self.objet.type)
+              if np.random.rand() < proba:
+                self.depot_objet()
+          else:
+            if self.cellule.objet != None:
+              proba = self.proba_prise(self.cellule.objet.type)
+              if np.random.rand() < proba:
+                if self.cellule.objet != 'C':
+                  self.prendre_objet()
+                else:
+                  self.etat = "help"
+                  self.emission_pheromone()
+      elif self.etat == "follow":
         self.move(new_cellule)
+      elif self.etat == "leader":
         if self.objet == None:
-          if self.cellule.objet != None:
-            proba = self.proba_prise(self.cellule.objet.type)
-            if np.random.rand() < proba:
-              self.prendre_objet()
+          self.prendre_objet()
         else:
-          if self.cellule.objet == None:
-            proba = self.proba_depot(self.objet.type)
-            if np.random.rand() < proba:
-              self.depot_objet()
+          if new_cellule != None:
+            self.move(new_cellule)
+            self.follower.move(new_cellule)
+            if self.cellule.objet == None:
+              proba = self.proba_depot(self.objet.type)
+              if np.random.rand() < proba:
+                self.depot_objet()
+                self.etat = "free"
+                self.follower.etat = "free"
+                self.follower.leader = None
+                self.follower = None
+      elif self.etat == "Looking for":
+        self.move(new_cellule)
+      else:
+        self.time_waiting += 1
+        if self.time_waiting > self.temps_attente:
+          self.etat = "free"
+          self.time_waiting = 0
+        else:
+          self.emission_pheromone()

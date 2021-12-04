@@ -10,9 +10,10 @@ class Environnement:
        Attributes :
          - M : Nombre de ligne du tableau
          - N : Nombre de colonne du tableau
+         - att_pheromone : taux d'atténuation des phéromones
          - tableau : Matrice de MxN cell"""
 
-    def __init__(self, M, N, nA, nB, nC, nAgent, kplus, kmoins, t):
+    def __init__(self, M, N, nA, nB, nC, nAgent, kplus, kmoins, t, S, att_pheromone, temps_attente):
         """Initialise l'environnement
            - nA : Nombre d'objet de type A
            - nB : Nombre d'objet de type B
@@ -23,10 +24,11 @@ class Environnement:
            - t : Mémoire des agents"""
         self.M = M
         self.N = N
+        self.att_pheromone = att_pheromone
 
-        self.init_tableau(M, N, nA, nB, nC, nAgent, kplus, kmoins, t)
+        self.init_tableau(M, N, nA, nB, nC, nAgent, kplus, kmoins, t, S, temps_attente)
 
-    def init_tableau(self, M, N, nA, nB, nC, nAgent, kplus, kmoins, t):
+    def init_tableau(self, M, N, nA, nB, nC, nAgent, kplus, kmoins, t, S, temps_attente):
         self.tableau = np.zeros((M,N),dtype=Cell)
         #Création des cellules vides
         for i in range(M):
@@ -67,7 +69,7 @@ class Environnement:
             while self.tableau[x,y].agent != None:
                 x = np.random.randint(M)
                 y = np.random.randint(N)
-            self.tableau[x,y].set_agent(Agent(self, self.tableau[x, y], kplus, kmoins, t))
+            self.tableau[x,y].set_agent(Agent(self, self.tableau[x, y], kplus, kmoins, t, S, temps_attente))
 
     def coord_agents(self):
         """Renvoie les coordonnées de tous les agents sur le terrain, cette fonction sert pour la représentation graphique"""
@@ -99,6 +101,7 @@ class Environnement:
                 for j in range(self.N):
                     if self.tableau[i,j].agent != None:
                         self.tableau[i,j].agent.action()
+                        self.tableau[i,j].attenuation_pheromone(self.att_pheromone)
 
             #Actualise le graphique a une fréquence donnée et un vitesse donnée
             if k%animation_freq == 0:
@@ -132,6 +135,7 @@ class Environnement:
                 for j in range(self.N):
                     if self.tableau[i,j].agent != None:
                         self.tableau[i,j].agent.action()
+                        self.tableau[i,j].attenuation_pheromone(self.att_pheromone)
 
             (X,Y) = self.coord_agents()
             Xagent.append(X)

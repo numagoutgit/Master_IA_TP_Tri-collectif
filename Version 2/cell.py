@@ -8,6 +8,7 @@ class Cell:
        Attribute :
          - x,y : Coordonnée du la cellule sur le plateau
          - agent : l'agent sur la cell ou None si aucun
+         - agent_following : l'agent suiveur si l'autre agent est un leader
          - objet : A, B ou None si aucun
          - taux : le taux de phéromone sur la case"""
 
@@ -15,11 +16,15 @@ class Cell:
         self.x = x
         self.y = y
         self.agent = agent
-        self.objet = objet
+        self.agent_following = None
+        self.objet : Objet = objet
         self.taux = 0
 
     def set_agent(self, agent):
         self.agent = agent
+
+    def set_agent_following(self, agent):
+        self.agent_following = agent
 
     def set_objet(self, objet):
         self.objet = objet
