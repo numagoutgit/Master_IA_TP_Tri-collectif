@@ -8,16 +8,24 @@ class Cell:
        Attribute :
          - x,y : Coordonnée du la cellule sur le plateau
          - agent : l'agent sur la cell ou None si aucun
-         - objet : A, B ou None si aucun"""
+         - objet : A, B ou None si aucun
+         - taux : le taux de phéromone sur la case"""
 
     def __init__(self, x, y, agent, objet):
         self.x = x
         self.y = y
         self.agent = agent
         self.objet = objet
+        self.taux = 0
 
     def set_agent(self, agent):
         self.agent = agent
 
     def set_objet(self, objet):
         self.objet = objet
+
+    def get_pheromone(self):
+        return self.taux
+
+    def set_pheromone(self, n):
+        self.taux = n
