@@ -13,7 +13,9 @@ class Agent:
          - kmoins : Constante de probabilite de dépot
          - memoire : Liste de taille t représentant la mémoire de l'agent
          - etat : Etat de l'agent (Free, Help, Follow, Looking for, Leader)
-         - quantite : quantite de pheromone envoyee"""
+         - quantite : quantite de pheromone envoyee
+         - leader : Agent leader si il est en follow
+         - follower : Agent suiveur si il est leader"""
 
     directions = [[1,0], [-1,0], [0,1], [0,-1], [1,1], [1,-1], [-1,1], [-1,-1]]
 
@@ -26,6 +28,8 @@ class Agent:
         self.memoire = ['O' for i in range(t)]
         self.etat = "Free"
         self.quantite = S
+        self.leader = None
+        self.follower = None
 
     def f(self, type):
       """Calcule la proportion d'objet dans la memoire"""
@@ -111,10 +115,28 @@ class Agent:
 
     def choix_deplacement(self):
       """Choisi son déplacement de manière aléatoire"""
-      voisin = self.perception()
-      if len(voisin) == 0:
+      if self.etat == "free" or self.etat == "leader":
+        mouvement_disponible = self.mouvement_disponible()
+        if len(mouvement_disponible) == 0:
+          return None
+        return mouvement_disponible[np.random.randint(len(mouvement_disponible))]
+      elif self.etat == "Looking for":
+        mouvement_disponible = self.mouvement_disponible()
+        if len(mouvement_disponible) == 0:
+          return None
+        new_cell = None
+        max_pheromone = 0
+        for cell in mouvement_disponible:
+          if cell.get_pheromone() > max_pheromone:
+            new_cell = cell
+            max_pheromone = cell.get_pheromone()
+        if max_pheromone < self.cellule.get_pheromone():
+          self.etat = "free"
+          return mouvement_disponible[np.random.randint(len(mouvement_disponible))]
+        else:
+          return new_cell
+      else:
         return None
-      return voisin[np.random.randint(len(voisin))]
 
     def action(self):
       """Enclenche l'action de l'agent"""
