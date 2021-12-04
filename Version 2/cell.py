@@ -29,3 +29,6 @@ class Cell:
 
     def set_pheromone(self, n):
         self.taux = n
+
+    def attenuation_pheromone(self, r):
+        self.set_pheromone(self.get_pheromone()/r)

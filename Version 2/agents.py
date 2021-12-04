@@ -12,11 +12,12 @@ class Agent:
          - kplus : Constante de probabilite de prise
          - kmoins : Constante de probabilite de dépot
          - memoire : Liste de taille t représentant la mémoire de l'agent
-         - etat : Etat de l'agent (Free, Help, Follow)"""
+         - etat : Etat de l'agent (Free, Help, Follow, Looking for, Leader)
+         - quantite : quantite de pheromone envoyee"""
 
     directions = [[1,0], [-1,0], [0,1], [0,-1], [1,1], [1,-1], [-1,1], [-1,-1]]
 
-    def __init__(self, env, cellule, kplus, kmoins, t):
+    def __init__(self, env, cellule, kplus, kmoins, t, S):
         self.env = env
         self.cellule = cellule
         self.objet = None
@@ -24,6 +25,7 @@ class Agent:
         self.kmoins = kmoins
         self.memoire = ['O' for i in range(t)]
         self.etat = "Free"
+        self.quantite = S
 
     def f(self, type):
       """Calcule la proportion d'objet dans la memoire"""
@@ -54,17 +56,25 @@ class Agent:
       return (f/(self.kmoins + f))**2
 
     def perception(self):
-      """Renvoie les cellules voisines de l'agent disponible"""
+      """Renvoie les cellules voisines de l'agent"""
       x = self.cellule.x
       y = self.cellule.y
-      voisin_disponible = []
+      voisin = []
       for dir in Agent.directions:
         new_x = x+dir[0]
         new_y = y+dir[1]
         if new_x>=0 and new_x<self.env.M and new_y>=0 and new_y<self.env.M:
           cellule = self.env.tableau[new_x, new_y]
-          if cellule.agent == None:
-            voisin_disponible.append(cellule)
+          voisin.append(cellule)
+      return voisin
+
+    def mouvement_disponible(self):
+      """Renvoie les cellules voisines disponible pour un mouvement"""
+      voisin = self.perception()
+      voisin_disponible = []
+      for cell in voisin:
+        if cell.agent == None:
+          voisin_disponible.append(cell)
       return voisin_disponible
 
     def actualiser_memoire(self, cellule_suivante):
@@ -98,6 +108,13 @@ class Agent:
       if len(voisin) == 0:
         return None
       return voisin[np.random.randint(len(voisin))]
+
+    def emission_pheromone(self):
+      """Envoie de la pheromone sur les cellules disponibles"""
+      voisin = self.perception()
+      self.cellule.set_pheromone(self.cellule.get_pheromone() + self.quantite)
+      for cell in voisin:
+        cell.set_pheromone(cell.get_pheromone() + self.quantite/2)
 
     def action(self):
       """Enclenche l'action de l'agent"""
