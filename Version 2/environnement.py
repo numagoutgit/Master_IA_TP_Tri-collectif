@@ -12,10 +12,11 @@ class Environnement:
          - N : Nombre de colonne du tableau
          - tableau : Matrice de MxN cell"""
 
-    def __init__(self, M, N, nA, nB, nAgent, kplus, kmoins, t, taux_erreur=0):
+    def __init__(self, M, N, nA, nB, nC, nAgent, kplus, kmoins, t, taux_erreur=0):
         """Initialise l'environnement
            - nA : Nombre d'objet de type A
            - nB : Nombre d'objet de type B
+           - nC : Nombre d'objet de type C
            - nAgent : Nombre d'agent
            - kplus : Constante de probabilite de prise
            - kmoins : Constante de probabilite de dépot
@@ -24,9 +25,9 @@ class Environnement:
         self.M = M
         self.N = N
 
-        self.init_tableau(M, N, nA, nB, nAgent, kplus, kmoins, t, taux_erreur)
+        self.init_tableau(M, N, nA, nB, nC, nAgent, kplus, kmoins, t, taux_erreur)
 
-    def init_tableau(self, M, N, nA, nB, nAgent, kplus, kmoins, t, taux_erreur):
+    def init_tableau(self, M, N, nA, nB, nC, nAgent, kplus, kmoins, t, taux_erreur):
         self.tableau = np.zeros((M,N),dtype=Cell)
         #Création des cellules vides
         for i in range(M):
@@ -50,6 +51,15 @@ class Environnement:
                 x = np.random.randint(M)
                 y = np.random.randint(N)
             self.tableau[x,y].set_objet(Objet('B'))
+
+        #Placement aléatoire des objets C
+        for k in range(nC):
+            x = np.random.randint(M)
+            y = np.random.randint(N)
+            while self.tableau[x,y].objet != None:
+                x = np.random.randint(M)
+                y = np.random.randint(N)
+            self.tableau[x,y].set_objet(Objet('C'))
                
         #Placement aléatoire des agents
         for k in range(nAgent):
