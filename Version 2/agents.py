@@ -102,19 +102,19 @@ class Agent:
       self.cellule.set_objet(self.objet)
       self.objet = None
 
-    def choix_deplacement(self):
-      """Choisi son déplacement de manière aléatoire"""
-      voisin = self.perception()
-      if len(voisin) == 0:
-        return None
-      return voisin[np.random.randint(len(voisin))]
-
     def emission_pheromone(self):
       """Envoie de la pheromone sur les cellules disponibles"""
       voisin = self.perception()
       self.cellule.set_pheromone(self.cellule.get_pheromone() + self.quantite)
       for cell in voisin:
         cell.set_pheromone(cell.get_pheromone() + self.quantite/2)
+
+    def choix_deplacement(self):
+      """Choisi son déplacement de manière aléatoire"""
+      voisin = self.perception()
+      if len(voisin) == 0:
+        return None
+      return voisin[np.random.randint(len(voisin))]
 
     def action(self):
       """Enclenche l'action de l'agent"""
