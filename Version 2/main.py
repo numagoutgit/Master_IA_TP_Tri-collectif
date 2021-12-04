@@ -9,6 +9,7 @@ M = 50
 N = 50
 nA = 100
 nB = 100
+nC = 100
 nAgent = 50
 kplus = 0.1
 kmoins = 0.3
@@ -18,9 +19,9 @@ nbTour = 5000
 
 #Choix des paramètres d'animation
 animation_speed = 0.001 #temps en seconde entre 2 images
-animation_freq = 5 #Nombre de tour entre 2 images
+animation_freq = 1 #Nombre de tour entre 2 images
 
-jeu = Environnement(M,N,nA,nB,nAgent,kplus,kmoins,t,taux_erreur)
+jeu = Environnement(M,N,nA,nB,nC,nAgent,kplus,kmoins,t,taux_erreur)
 
 fig, ax = plt.subplots()
 

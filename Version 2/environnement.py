@@ -109,8 +109,11 @@ class Environnement:
                 (X,Y) = self.coord_objet('B')
                 plots[1].set_data(X,Y)
 
-                (X,Y) = self.coord_agents()
+                (X,Y) = self.coord_objet('C')
                 plots[2].set_data(X,Y)
+
+                (X,Y) = self.coord_agents()
+                plots[3].set_data(X,Y)
 
                 #Permet d'actualiser le graphique
                 plt.pause(animation_speed)
