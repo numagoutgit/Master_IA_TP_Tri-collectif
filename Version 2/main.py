@@ -31,8 +31,9 @@ savefile = reponse_user == 'y'
 #Plot du début
 (XA, YA) = jeu.coord_objet('A')
 (XB, YB) = jeu.coord_objet('B')
+(XC, YC) = jeu.coord_objet('C')
 (Xagent, Yagent) = jeu.coord_agents()
-plot = ax.plot(XA, YA, 'bo', XB, YB, 'ro', Xagent, Yagent, 'k1')
+plot = ax.plot(XA, YA, 'bo', XB, YB, 'ro', XC, YC, 'go', Xagent, Yagent, 'k1')
 fig.suptitle('Taille mémoire = '+str(t)+"; Taux d'erreur = "+str(taux_erreur))
 
 
@@ -45,23 +46,27 @@ if not savefile:
     #Plot de fin
     (XA, YA) = jeu.coord_objet('A')
     (XB, YB) = jeu.coord_objet('B')
+    (XC, YC) = jeu.coord_objet('C')
     (Xagent, Yagent) = jeu.coord_agents()
     plot[0].set_data(XA,YA)
     plot[1].set_data(XB,YB)
-    plot[2].set_data(Xagent,Yagent)
+    plot[2].set_data(XC, YC)
+    plot[3].set_data(Xagent,Yagent)
 else:
-    XA, YA, XB, YB, Xagent, Yagent = jeu.run_with_saving(nbTour)
+    XA, YA, XB, YB, XC, YC, Xagent, Yagent = jeu.run_with_saving(nbTour)
 
     def update(i):
         actual_i = i*animation_freq
         if actual_i < nbTour:
             plot[0].set_data(XA[actual_i], YA[actual_i])
             plot[1].set_data(XB[actual_i], YB[actual_i])
-            plot[2].set_data(Xagent[actual_i], Yagent[actual_i])
+            plot[2].set_data(XC[actual_i], YC[actual_i])
+            plot[3].set_data(Xagent[actual_i], Yagent[actual_i])
         else:
             plot[0].set_data(XA[-1], YA[-1])
             plot[1].set_data(XB[-1], YB[-1])
-            plot[2].set_data(Xagent[-1], Yagent[-1])
+            plot[2].set_data(XC[-1], YC[-1])
+            plot[3].set_data(Xagent[-1], Yagent[-1])
 
     animation = anim.FuncAnimation(fig, update, frames = nbTour//animation_freq +1 , interval = animation_speed*1000, repeat = False)
 

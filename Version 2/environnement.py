@@ -121,6 +121,8 @@ class Environnement:
         YA = []
         XB = []
         YB = []
+        XC = []
+        YC = []
         Xagent = []
         Yagent = []
         for k in range(n):
@@ -138,4 +140,7 @@ class Environnement:
             (X,Y) = self.coord_objet('B')
             XB.append(X)
             YB.append(Y)
-        return(XA, YA, XB, YB, Xagent, Yagent)
+            (X,Y) = self.coord_objet('C')
+            XC.append(X)
+            YC.append(Y)
+        return(XA, YA, XB, YB, XC, YC, Xagent, Yagent)
