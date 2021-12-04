@@ -12,32 +12,37 @@ class Agent:
          - kplus : Constante de probabilite de prise
          - kmoins : Constante de probabilite de dépot
          - memoire : Liste de taille t représentant la mémoire de l'agent
-         - taux_erreur : Taux d'erreur de discernement des objets (valeur par defaut = 0)"""
+         - etat : Etat de l'agent (Free, Help, Follow)"""
 
     directions = [[1,0], [-1,0], [0,1], [0,-1], [1,1], [1,-1], [-1,1], [-1,-1]]
 
-    def __init__(self, env, cellule, kplus, kmoins, t, taux_erreur):
+    def __init__(self, env, cellule, kplus, kmoins, t):
         self.env = env
         self.cellule = cellule
         self.objet = None
         self.kplus = kplus
         self.kmoins = kmoins
         self.memoire = ['O' for i in range(t)]
-        self.taux_erreur = taux_erreur
+        self.etat = "Free"
 
     def f(self, type):
       """Calcule la proportion d'objet dans la memoire"""
       nbA = 0
       nbB = 0
+      nbC = 0
       for o in self.memoire:
         if o == 'A':
           nbA += 1
         elif o == 'B':
           nbB += 1
+        elif o == 'C':
+          nbC += 1
       if type == 'A':
-        return (nbA + nbB*self.taux_erreur)/len(self.memoire)
+        return (nbA)/len(self.memoire)
+      elif type == 'B':
+        return (nbB)/len(self.memoire)
       else:
-        return (nbB + nbA*self.taux_erreur)/len(self.memoire)
+        return (nbC)/len(self.memoire)
 
     def proba_prise(self, type):
       """Probabilite de saisir l'objet de type"""

@@ -12,7 +12,7 @@ class Environnement:
          - N : Nombre de colonne du tableau
          - tableau : Matrice de MxN cell"""
 
-    def __init__(self, M, N, nA, nB, nC, nAgent, kplus, kmoins, t, taux_erreur=0):
+    def __init__(self, M, N, nA, nB, nC, nAgent, kplus, kmoins, t):
         """Initialise l'environnement
            - nA : Nombre d'objet de type A
            - nB : Nombre d'objet de type B
@@ -20,14 +20,13 @@ class Environnement:
            - nAgent : Nombre d'agent
            - kplus : Constante de probabilite de prise
            - kmoins : Constante de probabilite de dépot
-           - t : Mémoire des agents
-           - taux_erreur : Pourcentage d'erreur dans la reconnaissance d'objet"""
+           - t : Mémoire des agents"""
         self.M = M
         self.N = N
 
-        self.init_tableau(M, N, nA, nB, nC, nAgent, kplus, kmoins, t, taux_erreur)
+        self.init_tableau(M, N, nA, nB, nC, nAgent, kplus, kmoins, t)
 
-    def init_tableau(self, M, N, nA, nB, nC, nAgent, kplus, kmoins, t, taux_erreur):
+    def init_tableau(self, M, N, nA, nB, nC, nAgent, kplus, kmoins, t):
         self.tableau = np.zeros((M,N),dtype=Cell)
         #Création des cellules vides
         for i in range(M):
@@ -68,7 +67,7 @@ class Environnement:
             while self.tableau[x,y].agent != None:
                 x = np.random.randint(M)
                 y = np.random.randint(N)
-            self.tableau[x,y].set_agent(Agent(self, self.tableau[x, y], kplus, kmoins, t, taux_erreur))
+            self.tableau[x,y].set_agent(Agent(self, self.tableau[x, y], kplus, kmoins, t))
 
     def coord_agents(self):
         """Renvoie les coordonnées de tous les agents sur le terrain, cette fonction sert pour la représentation graphique"""
