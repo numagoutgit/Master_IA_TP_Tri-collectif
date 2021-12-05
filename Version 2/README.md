@@ -21,7 +21,7 @@ Dans le code, les agents ont donc deux attributs supplémentaire, `leader` et `f
 
 **Gif d'animation**
 
-![](image_rapport/animation.gif?raw=true)
+![](image_rapport/animation_v2.gif?raw=true)
 
 Si on regarde bien on voit bien que des agents se pose sur les objets vert, puis qu'un autre agent se colle à eux. Enfin l'objet vers est ramassé puis les deux agents se suivent jusqu'à ce que le leader dépose l'objet.
 
