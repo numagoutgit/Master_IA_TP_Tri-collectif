@@ -1,4 +1,4 @@
-# TP2_master_IA
+# TP2_master_IA Version 1
 
 **Résumé du sujet disponible sur SujeT_TP2_SMA.pdf :**
 

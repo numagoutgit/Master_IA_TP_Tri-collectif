@@ -17,10 +17,10 @@ t = 10
 S = 10
 att_pheromone = 0.2
 temps_attente = 10
-nbTour = 5000
+nbTour = 3000
 
 #Choix des paramètres d'animation
-animation_speed = 0.001 #temps en seconde entre 2 images
+animation_speed = 0.01 #temps en seconde entre 2 images
 animation_freq = 1 #Nombre de tour entre 2 images
 
 jeu = Environnement(M,N,nA,nB,nC,nAgent,kplus,kmoins,t, S, att_pheromone, temps_attente)
