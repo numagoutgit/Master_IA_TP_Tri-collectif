@@ -43,7 +43,7 @@ class Environnement:
                 x = np.random.randint(M)
                 y = np.random.randint(N)
             self.tableau[x,y].set_objet(Objet('A'))
-        
+
         #Placement aléatoire des objets B
         for k in range(nB):
             x = np.random.randint(M)
@@ -61,7 +61,7 @@ class Environnement:
                 x = np.random.randint(M)
                 y = np.random.randint(N)
             self.tableau[x,y].set_objet(Objet('C'))
-               
+
         #Placement aléatoire des agents
         for k in range(nAgent):
             x = np.random.randint(M)
@@ -102,7 +102,6 @@ class Environnement:
                     if self.tableau[i,j].agent != None:
                         self.tableau[i,j].agent.action()
                         self.tableau[i,j].attenuation_pheromone(self.att_pheromone)
-
             #Actualise le graphique a une fréquence donnée et un vitesse donnée
             if k%animation_freq == 0:
                 (X,Y) = self.coord_objet('A')

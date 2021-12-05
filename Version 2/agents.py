@@ -23,12 +23,12 @@ class Agent:
 
     def __init__(self, env, cellule, kplus, kmoins, t, S, temps_attente):
         self.env = env
-        self.cellule : Cell = cellule
+        self.cellule = cellule
         self.objet = None
         self.kplus = kplus
         self.kmoins = kmoins
         self.memoire = ['O' for i in range(t)]
-        self.etat = "Free"
+        self.etat = "free"
         self.quantite = S
         self.leader : Agent = None
         self.follower : Agent = None
@@ -96,10 +96,6 @@ class Agent:
     def move(self,cellule_suivante):
       """Deplacement de l'agent vers la cellule"""
       if cellule_suivante != None:
-        if self.etat == "follow":
-          self.cellule.set_agent_following(None)
-        elif self.etat == "free":
-          self.cellule.set_agent_following(None)
         self.cellule.set_agent(None)
         cellule_suivante.set_agent(self)
         self.cellule = cellule_suivante
@@ -140,7 +136,7 @@ class Agent:
               cell.agent.etat = "leader"
               cell.agent.follower = self
               cell.agent.time_waiting = 0
-              return cell
+              return None
         mouvement_disponible = self.mouvement_disponible()
         if len(mouvement_disponible) == 0:
           return None
@@ -174,11 +170,15 @@ class Agent:
             if self.cellule.objet != None:
               proba = self.proba_prise(self.cellule.objet.type)
               if np.random.rand() < proba:
-                if self.cellule.objet != 'C':
+                if self.cellule.objet.type != 'C':
                   self.prendre_objet()
                 else:
                   self.etat = "help"
                   self.emission_pheromone()
+            else:
+              taux_pheromone = self.cellule.get_pheromone()
+              if taux_pheromone > 20:
+                self.etat = "Looking for"
 
       elif self.etat == "follow": #Si il est follow, new_cellule == None sauf au tout début où new_cellule est la position du leader
         self.move(new_cellule)
@@ -188,8 +188,9 @@ class Agent:
           self.prendre_objet()
         else:
           if new_cellule != None:
+            old_cell = self.cellule
             self.move(new_cellule)
-            self.follower.move(new_cellule)
+            self.follower.move(old_cell)
             if self.cellule.objet == None:
               proba = self.proba_depot(self.objet.type)
               if np.random.rand() < proba:
@@ -209,3 +210,4 @@ class Agent:
           self.time_waiting = 0
         else:
           self.emission_pheromone()
+          self.memoire = ['O'] + self.memoire[:-1]
